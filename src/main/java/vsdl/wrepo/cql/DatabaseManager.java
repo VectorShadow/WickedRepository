@@ -1,10 +1,12 @@
-package vsdl.wrepo.manager;
+package vsdl.wrepo.cql;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import vsdl.wrepo.connector.CassandraConnector;
 
-public abstract class AbstractDatabaseManager {
+public class DatabaseManager {
+    private static final String NODE = "0.0.0.0";
+    private static final int PORT = 9042;
 
     private final CassandraConnector cassandraConnector = new CassandraConnector();
 
@@ -12,12 +14,11 @@ public abstract class AbstractDatabaseManager {
         return cassandraConnector.getSession();
     }
 
-    protected abstract String getNode();
-
-    protected abstract int getPort();
-
     public void startup() {
-        cassandraConnector.connect(getNode(), getPort());
+        cassandraConnector.connect(NODE, PORT);
+        query(Data.CREATE_KEYSPACE_USER);
+        query(Data.CREATE_TABLE_USER_LOGON);
+
     }
 
     public void shutdown() {
