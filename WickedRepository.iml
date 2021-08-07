@@ -21,7 +21,7 @@
     <orderEntry type="library" exported="" name="Maven: io.dropwizard.metrics:metrics-core:3.1.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.github.jnr:jnr-ffi:2.0.7" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.github.jnr:jffi:1.2.10" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Maven: com.github.jnr:jffi:native:1.2.10" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.github.jnr:jffi:native:1.2.10" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ow2.asm:asm:5.0.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ow2.asm:asm-commons:5.0.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ow2.asm:asm-analysis:5.0.3" level="project" />

@@ -1,4 +1,4 @@
-package vsdl.wrepo.cql;
+package vsdl.wrepo.cql.query;
 
 public class ColumnInfo {
     private final String NAME;
