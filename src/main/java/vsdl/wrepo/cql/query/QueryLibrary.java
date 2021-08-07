@@ -7,7 +7,7 @@ public class QueryLibrary {
 
     private static final String REPL = "replication";
     private static final String CLASS = "'class':";
-    private static final String REPL_FACTOR = "'replication_factor';";
+    private static final String REPL_FACTOR = "'replication_factor':";
 
     public String buildQuery(QueryType queryType, Object... args) {
         switch (queryType) {
@@ -47,7 +47,7 @@ public class QueryLibrary {
     ) {
         return CREATE_KEYSPACE + SPC + keySpaceName + SPC +
                 WITH + SPC + REPL + SPC + EQUALS + SPC +
-                L_BRACE + CLASS + replicationStrategy + COMMA +
+                L_BRACE + CLASS + S_QUOT + replicationStrategy + S_QUOT + COMMA +
                 REPL_FACTOR + replicationFactor + R_BRACE + SEMI;
     }
 
