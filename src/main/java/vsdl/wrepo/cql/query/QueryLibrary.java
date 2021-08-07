@@ -1,5 +1,7 @@
 package vsdl.wrepo.cql.query;
 
+import vsdl.datavector.crypto.CryptoUtilities;
+
 import static vsdl.wrepo.cql.query.Constants.*;
 import static vsdl.wrepo.cql.query.Database.*;
 
@@ -8,6 +10,8 @@ public class QueryLibrary {
     private static final String REPL = "replication";
     private static final String CLASS = "'class':";
     private static final String REPL_FACTOR = "'replication_factor':";
+
+    private static final int RANDOM_SALT_LENGTH = 16;
 
     public String buildQuery(QueryType queryType, Object... args) {
         switch (queryType) {
@@ -28,16 +32,11 @@ public class QueryLibrary {
                 //todo
                 break;
             case LOGIN_CREATE:
-                //todo
-                break;
+                return createNewUser((String) args[0], (String) args[1]);
             case LOGIN_EXISTS:
-                return findLoginIfExists((String) args[0]);
+                return findUserIfExists((String) args[0]);
         }
         throw new IllegalArgumentException("Unhandled QueryType: " + queryType);
-    }
-
-    private String getFullTableName(String keySpaceName, String tableName) {
-        return keySpaceName + DOT + tableName;
     }
 
     private String createKeyspace(
@@ -47,7 +46,7 @@ public class QueryLibrary {
     ) {
         return CREATE_KEYSPACE + SPC + keySpaceName + SPC +
                 WITH + SPC + REPL + SPC + EQUALS + SPC +
-                L_BRACE + CLASS + S_QUOT + replicationStrategy + S_QUOT + COMMA +
+                L_BRACE + CLASS + wrapString(replicationStrategy) + COMMA +
                 REPL_FACTOR + replicationFactor + R_BRACE + SEMI;
     }
 
@@ -73,9 +72,22 @@ public class QueryLibrary {
         return sb.toString();
     }
 
-    private String findLoginIfExists(String userName) {
-        return SELECT + SPC + STAR + SPC + FROM + SPC + getFullTableName(KS_USER, CF_USER_LOGON) + SPC +
-                WHERE + SPC + COL_USER_LOGON_USERNAME + SPC + EQUALS + SPC + S_QUOT + userName + S_QUOT + SEMI;
+    private String findUserIfExists(String userName) {
+        return selectFrom(KS_USER, CF_USER_LOGON) + SPC +
+                WHERE + SPC + COL_USER_LOGON_USERNAME + SPC + EQUALS + SPC + wrapString(userName) + SEMI;
+    }
+
+    private String createNewUser(String userName, String decryptedPassword) {
+        String salt = CryptoUtilities.randomAlphaNumericString(RANDOM_SALT_LENGTH);
+        return insertInto(KS_USER, CF_USER_LOGON, new String[]{
+                COL_USER_LOGON_USERNAME,
+                COL_USER_LOGON_SALT,
+                COL_USER_LOGON_HASHED_PASSWORD
+        }, new String[]{
+                wrapString(userName),
+                wrapString(salt),
+                wrapString(CryptoUtilities.hash(CryptoUtilities.salt(decryptedPassword, salt)))
+        });
     }
 
 }
