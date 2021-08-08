@@ -2,6 +2,7 @@ package vsdl.wrepo.cql.query;
 
 import com.datastax.driver.core.Session;
 import vsdl.datavector.crypto.CryptoUtilities;
+import vsdl.wl.elements.SecurityConstants;
 
 public class Database {
 
@@ -50,7 +51,7 @@ public class Database {
         session.execute(queryLibrary.buildQuery(QueryType.CREATE_TABLE, CREATE_TABLE_USER_LOGON));
         //create the root account:
         if (session.execute(queryLibrary.buildQuery(QueryType.LOGIN_EXISTS, ROOT_USR)).all().size() == 0) {
-            String rootPassword = CryptoUtilities.randomAlphaNumericString(8);
+            String rootPassword = CryptoUtilities.randomAlphaNumericString(SecurityConstants.SALT_LENGTH);
             System.out.println("Root user did not exist - creating...");
             session.execute(queryLibrary.buildQuery(QueryType.LOGIN_CREATE, ROOT_USR, rootPassword));
             System.out.println("Root user created with username " + ROOT_USR + " and password " + rootPassword);
