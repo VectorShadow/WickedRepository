@@ -4,9 +4,11 @@ public class Constants {
     static final String CREATE_KEYSPACE = "CREATE KEYSPACE IF NOT EXISTS";
     static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS";
 
+    static final String AND = "AND";
     static final String FROM = "FROM";
     static final String INSERT = "INSERT";
     static final String INTO = "INTO";
+    static final String OR = "OR";
     static final String SELECT = "SELECT";
     static final String VALUES = "VALUES";
     static final String WITH = "WITH";

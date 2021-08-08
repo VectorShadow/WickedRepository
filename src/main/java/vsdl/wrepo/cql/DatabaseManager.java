@@ -37,7 +37,8 @@ public class DatabaseManager {
     public List<WickedObjectModel> query(QueryType type, Object... args) {
         return queryResultProcessor.processResults(
                 type,
-                executeQueryString(queryLibrary.buildQuery(type, args))
+                executeQueryString(queryLibrary.buildQuery(type, args)).all(),
+                args
         );
     }
 

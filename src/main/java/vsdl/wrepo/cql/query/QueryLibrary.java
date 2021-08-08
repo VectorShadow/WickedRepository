@@ -28,12 +28,9 @@ public class QueryLibrary {
                         (int) args[2],
                         (ColumnInfo[]) args[3]
                 );
-            case LOGIN_AUTH:
-                //todo
-                break;
-            case LOGIN_CREATE:
+            case LOGON_CREATE_USER:
                 return createNewUser((String) args[0], (String) args[1]);
-            case LOGIN_EXISTS:
+            case LOGON_USER_AUTH: case LOGON_USER_EXISTS:
                 return findUserIfExists((String) args[0]);
         }
         throw new IllegalArgumentException("Unhandled QueryType: " + queryType);
