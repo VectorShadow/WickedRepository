@@ -1,7 +1,5 @@
 package vsdl.wrepo.cql.query;
 
-import vsdl.datavector.crypto.CryptoUtilities;
-
 import static vsdl.wrepo.cql.query.Constants.*;
 import static vsdl.wrepo.cql.query.Database.*;
 
@@ -10,8 +8,6 @@ public class QueryLibrary {
     private static final String REPL = "replication";
     private static final String CLASS = "'class':";
     private static final String REPL_FACTOR = "'replication_factor':";
-
-    private static final int RANDOM_SALT_LENGTH = 16;
 
     public String buildQuery(QueryType queryType, Object... args) {
         switch (queryType) {
@@ -29,8 +25,8 @@ public class QueryLibrary {
                         (ColumnInfo[]) args[3]
                 );
             case LOGON_CREATE_USER:
-                return createNewUser((String) args[0], (String) args[1]);
-            case LOGON_USER_AUTH: case LOGON_USER_EXISTS:
+                return createNewUser((String) args[0], (String) args[1], (String) args[2]);
+            case LOGON_USER_EXISTS:
                 return findUserIfExists((String) args[0]);
         }
         throw new IllegalArgumentException("Unhandled QueryType: " + queryType);
@@ -74,8 +70,10 @@ public class QueryLibrary {
                 WHERE + SPC + COL_USER_LOGON_USERNAME + SPC + EQUALS + SPC + wrapString(userName) + SEMI;
     }
 
-    private String createNewUser(String userName, String decryptedPassword) {
-        String salt = CryptoUtilities.randomAlphaNumericString(RANDOM_SALT_LENGTH);
+    private String createNewUser(String userName, String salt, String hashedPassword) {
+//        //todo - fix this in server
+//        String salt = CryptoUtilities.randomAlphaNumericString(RANDOM_SALT_LENGTH);
+//        CryptoUtilities.hash(CryptoUtilities.salt(decryptedPassword, salt))
         return insertInto(KS_USER, CF_USER_LOGON, new String[]{
                 COL_USER_LOGON_USERNAME,
                 COL_USER_LOGON_SALT,
@@ -83,7 +81,7 @@ public class QueryLibrary {
         }, new String[]{
                 wrapString(userName),
                 wrapString(salt),
-                wrapString(CryptoUtilities.hash(CryptoUtilities.salt(decryptedPassword, salt)))
+                wrapString(hashedPassword)
         });
     }
 
