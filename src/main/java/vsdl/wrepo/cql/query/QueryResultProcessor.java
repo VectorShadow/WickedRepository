@@ -1,7 +1,6 @@
 package vsdl.wrepo.cql.query;
 
 import com.datastax.driver.core.Row;
-import vsdl.wl.wom.BoolWOM;
 import vsdl.wl.wom.UserLogonWOM;
 import vsdl.wl.wom.WickedObjectModel;
 

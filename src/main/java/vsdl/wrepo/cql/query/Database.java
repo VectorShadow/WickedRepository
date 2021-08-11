@@ -21,6 +21,18 @@ public class Database {
     static final String COL_USER_LOGON_HASHED_PASSWORD = "HSHDPWD";
     static final ColumnInfo COL_USER_LOGON_HASHED_PASSWORD_INFO =
             new ColumnInfo(COL_USER_LOGON_HASHED_PASSWORD, DT_TEXT);
+    //todo - creation timestamp
+
+    static final String CF_USER_CHARS ="CHARS";
+
+    static final String COL_USER_CHARS_USERNAME = "USRNM";
+    static final ColumnInfo COL_USER_CHARS_USERNAME_INFO =
+            new ColumnInfo(COL_USER_CHARS_USERNAME, DT_TEXT);
+    static final String COL_USER_CHARS_CHARNAME = "CHRNM";
+    static final ColumnInfo COL_USER_CHARS_CHARNAME_INFO =
+            new ColumnInfo(COL_USER_CHARS_CHARNAME, DT_TEXT);
+    //todo - find out how to do a combined primary key - this should be from the above fields
+    //todo - find out how to do an object data type - we need character sheet here:
 
     static final String SIMPLE_REPLICATION_STRATEGY = "SimpleStrategy";
     static final int ONE = 1;
@@ -39,6 +51,18 @@ public class Database {
                     COL_USER_LOGON_USERNAME_INFO,
                     COL_USER_LOGON_SALT_INFO,
                     COL_USER_LOGON_HASHED_PASSWORD_INFO
+                    //todo - creation timestamp
+            }
+    };
+
+    static final Object[] CREATE_TABLE_USER_CHARS = new Object[] {
+            KS_USER,
+            CF_USER_CHARS,
+            -1, //todo - this needs to be our combined primary key!
+            new ColumnInfo[] {
+                    COL_USER_CHARS_USERNAME_INFO,
+                    COL_USER_CHARS_CHARNAME_INFO,
+                    //todo - character sheet here
             }
     };
 
