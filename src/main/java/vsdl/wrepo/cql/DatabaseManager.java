@@ -27,7 +27,6 @@ public class DatabaseManager {
     public void startup() {
         cassandraConnector.connect(NODE, PORT);
         Database.create(getSession(), queryLibrary);
-        Updater.update(getSession());
     }
 
     public void shutdown() {
