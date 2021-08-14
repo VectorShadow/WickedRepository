@@ -17,7 +17,7 @@ public class QueryResultProcessor {
         ArrayList<WickedObjectModel> woms = new ArrayList<>();
         switch (queryType) {
             case LOGON_CREATE_USER:
-                //todo
+                //nothing to do here
                 break;
             case LOGON_USER_EXISTS:
                 onlyOne(numberOfResults);

@@ -27,6 +27,7 @@ public class DatabaseManager {
     public void startup() {
         cassandraConnector.connect(NODE, PORT);
         Database.create(getSession(), queryLibrary);
+        Updater.update(getSession());
     }
 
     public void shutdown() {
@@ -35,9 +36,11 @@ public class DatabaseManager {
     }
 
     public List<WickedObjectModel> query(QueryType type, Object... args) {
+        String queryString = queryLibrary.buildQuery(type, args);
+        System.out.println("Executing query: " + queryString);
         return queryResultProcessor.processResults(
                 type,
-                executeQueryString(queryLibrary.buildQuery(type, args)).all(),
+                executeQueryString(queryString).all(),
                 args
         );
     }

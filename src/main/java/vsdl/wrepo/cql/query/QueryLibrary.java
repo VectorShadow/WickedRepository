@@ -77,11 +77,15 @@ public class QueryLibrary {
         return insertInto(KS_USER, CF_USER_LOGON, new String[]{
                 COL_USER_LOGON_USERNAME,
                 COL_USER_LOGON_SALT,
-                COL_USER_LOGON_HASHED_PASSWORD
+                COL_USER_LOGON_HASHED_PASSWORD,
+                COL_USER_LOGON_CREATION_TIMESTAMP,
+                COL_USER_LOGON_ACCOUNT_STATUS
         }, new String[]{
                 wrapString(userName),
                 wrapString(salt),
-                wrapString(hashedPassword)
+                wrapString(hashedPassword),
+                "" + System.currentTimeMillis(),
+                "0"
         });
     }
 

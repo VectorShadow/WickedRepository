@@ -7,6 +7,9 @@ public class Database {
     public static final String ROOT_USR = "root";
 
     static final String DT_TEXT = "text";
+    static final String DT_TIMESTAMP = "timestamp";
+
+    static final String DT_BYTE = "tinyint";
 
     static final String KS_USER = "USR";
 
@@ -21,7 +24,12 @@ public class Database {
     static final String COL_USER_LOGON_HASHED_PASSWORD = "HSHDPWD";
     static final ColumnInfo COL_USER_LOGON_HASHED_PASSWORD_INFO =
             new ColumnInfo(COL_USER_LOGON_HASHED_PASSWORD, DT_TEXT);
-    //todo - creation timestamp
+    static final String COL_USER_LOGON_CREATION_TIMESTAMP = "CRTTMSTMP";
+    static final ColumnInfo COL_USER_LOGON_CREATION_TIMESTAMP_INFO =
+            new ColumnInfo(COL_USER_LOGON_CREATION_TIMESTAMP, DT_TIMESTAMP);
+    static final String COL_USER_LOGON_ACCOUNT_STATUS = "ACTSTTS";
+    static final ColumnInfo COL_USER_LOGON_ACCOUNT_STATUS_INFO =
+            new ColumnInfo(COL_USER_LOGON_ACCOUNT_STATUS, DT_BYTE);
 
     static final String CF_USER_CHARS ="CHARS";
 
@@ -50,8 +58,9 @@ public class Database {
             new ColumnInfo[] {
                     COL_USER_LOGON_USERNAME_INFO,
                     COL_USER_LOGON_SALT_INFO,
-                    COL_USER_LOGON_HASHED_PASSWORD_INFO
-                    //todo - creation timestamp
+                    COL_USER_LOGON_HASHED_PASSWORD_INFO,
+                    COL_USER_LOGON_CREATION_TIMESTAMP_INFO,
+                    COL_USER_LOGON_ACCOUNT_STATUS_INFO
             }
     };
 
